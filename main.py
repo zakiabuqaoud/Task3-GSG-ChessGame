@@ -112,7 +112,19 @@ assert chess_df['rating_diff'].notna().all(), "rating_diff contain null"
 assert chess_df.duplicated().sum() == 0, "There are duplicated"
 print("2f validation is Finished.")
 
+# ===============      Stage 3  ========================
 
+#Q10 What is the win rate for White, Black, and Draw? (% of total games)
+print("Q10: What is the win rate for White, Black, and Draw? (% of total games)")
+len_chess_df = len(chess_df)
+white_win = len((chess_df[chess_df["winner"] == "White"]))
+black_win = len((chess_df[chess_df["winner"] == "Black"]))
+draw_win = len((chess_df[chess_df["winner"] == "Draw"]))
+# Answer: Q10: What is the win rate for White, Black, and Draw?
+white_result = (white_win / len_chess_df) * 100
+black_result = (black_win / len_chess_df) * 100
+draw_result = (draw_win / len_chess_df) * 100
+print(f" Q10) white_result: {white_result:.1f}%, black_result:{black_result:.1f}% , draw_result:{draw_result:.1f}%")
 
 
 

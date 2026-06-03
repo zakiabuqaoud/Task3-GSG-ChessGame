@@ -181,3 +181,11 @@ print("Turn category turns_cate_percentages: Answer Q15:")
 print(turns_cate_percentages)
 
 # ===============      Stage 4  ========================
+print("Q16: White players missing from registry?")
+white_players = set(chess_df['white_id'].unique())
+registered_players = set(players_df['username'].unique())
+missing_players = white_players - registered_players
+print(f"Answer Q16: Miss White players: {len(missing_players)}")
+
+
+

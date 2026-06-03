@@ -134,6 +134,13 @@ victory_status_with_count = chess_df["victory_status"].value_counts().sort_value
 most_vic_res_per = (victory_status_with_count.iloc[0] / len(chess_df)) * 100
 print(f"The Q11 Answer: {victory_status_with_count.index[0]}, count: {victory_status_with_count.iloc[0]} => {most_vic_res_per:.1f}%")
 
+#Q12 What is the most common way games end (victory_status)? Resign: 55.6% then Mate, Out of Time,
+print("Q12: Victory Status with Highest Average Turns")
+avg_turns_by_victory_status = chess_df.groupby('victory_status')['turns'].mean().sort_values(ascending=False)
+highest_status = avg_turns_by_victory_status.index[0]
+highest_status_per = avg_turns_by_victory_status.iloc[0]
+#Answer Q12
+print(f"Answer is : {highest_status} Game with {highest_status_per}%")
 
 
 

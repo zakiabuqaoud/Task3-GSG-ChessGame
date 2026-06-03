@@ -126,6 +126,14 @@ black_result = (black_win / len_chess_df) * 100
 draw_result = (draw_win / len_chess_df) * 100
 print(f" Q10) white_result: {white_result:.1f}%, black_result:{black_result:.1f}% , draw_result:{draw_result:.1f}%")
 
+#Q11 What is the most common way games end (victory_status)? Resign: 55.6% then Mate, Out of Time,
+print("Q11 What is the most common way games end (victory_status)?")
+victory_status_with_count = chess_df["victory_status"].value_counts().sort_values(ascending=False)
+# print(victory_status_with_count)
+# the answer Q11: Resign : 11147
+most_vic_res_per = (victory_status_with_count.iloc[0] / len(chess_df)) * 100
+print(f"The Q11 Answer: {victory_status_with_count.index[0]}, count: {victory_status_with_count.iloc[0]} => {most_vic_res_per:.1f}%")
+
 
 
 

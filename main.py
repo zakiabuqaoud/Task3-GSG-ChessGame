@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import country
 
 # Definition for root variable
 url1 = "https://drive.google.com/file/d/1eR3NZtwIC6ECN3vhtrynqmx8okG0twA7/view?usp=sharing"
@@ -181,11 +182,18 @@ print("Turn category turns_cate_percentages: Answer Q15:")
 print(turns_cate_percentages)
 
 # ===============      Stage 4  ========================
+# Q16: White players missing from registry?
 print("Q16: White players missing from registry?")
 white_players = set(chess_df['white_id'].unique())
 registered_players = set(players_df['username'].unique())
 missing_players = white_players - registered_players
 print(f"Answer Q16: Miss White players: {len(missing_players)}")
 
+# Q17: Country Name Inconsistencies"
+print("Q17: Country Name Inconsistencies:-")
+print(players_df['country'].value_counts())
+print(f"Total unique forms: {players_df['country'].nunique()}")
+players_df['country_clean'] = players_df['country'].map(country.country_mapping).fillna(players_df['country'])
+print(f"the clean country\n {players_df['country_clean'].nunique()} \n {players_df['country_clean'].value_counts()}")
 
 

@@ -69,6 +69,34 @@ print(f"The Answer is: {min_turns}")
 
 # ===============      Stage 2  ========================
 
+# The 2a question ===> Parse time_increment?
+print("2a- Parse time_increment?")
+time_split = chess_df["time_increment"].str.split('+', expand=True)
+chess_df["time_base"] = pd.to_numeric(time_split[0],errors="coerce")
+chess_df["time_Sec"] = pd.to_numeric(time_split[1],errors="coerce")
+
+# the answer 2a
+print(f"The Answer is:\n {chess_df[['time_increment','time_base', 'time_Sec']]}")
+
+# The 2b question ===> Add rating_diff
+print("2b- Add rating_diff: ")
+chess_df["rating_diff"] = chess_df["white_rating"] - chess_df["black_rating"]
+# the answer 2b
+print(f"The Answer 2b is:\n {chess_df['rating_diff']}")
+
+# The 2c question ===> 2c Extract opening_family
+print("2c Extract opening_family: ")
+chess_df["opening_family"] = chess_df["opening_fullname"].str.split(":").str[0].str.strip()
+# the answer 2c
+print(f"The Answer 2c is:\n {chess_df[['opening_fullname', 'opening_family']]}")
+
+# 2d : Drop high-null column
+print("2d Drop high-null column: ")
+print(chess_df.shape)
+chess_df = chess_df.drop(columns=['opening_response'])
+# the answer 2d
+print(chess_df.shape)
+print(f"The Answer 2d is: opening_response column is deleted ")
 
 
 

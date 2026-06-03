@@ -26,6 +26,55 @@ def load_data(link, local_path):
 
 chess_df = load_data(URL1, "data_raw/chess_games.csv")
 players_df = load_data(URL2, "data_raw/player.csv")
+# print(chess_df)
+# print(players_df)
+
+# ===============      Stage 1 ========================
+
+# The 1st question
+print("1- How many records are in the dataset?")
+# the answer is 20058 rows
+print(f"The Answer is: {chess_df.shape[0]} rows")
+
+# The 2nd question
+print("2- How many exact duplicate rows exist?")
+# the answer is 0 exact duplicates
+print(f"The Answer is: {chess_df.duplicated().sum()} exact duplicates")
+
+# The 3rd question
+print("3- How many games have duplicate move sequences?")
+# the answer is 1138 duplicates
+print(f"The Answer is: {chess_df.duplicated(subset=['moves']).sum()} duplicates")
+
+# The 4th question
+print("4- What % of opening_response is missing?")
+missing_open_response_count = chess_df['opening_response'].isna().sum()
+miss_open_res_result = (missing_open_response_count / len(chess_df)) * 100
+# the answer is 93.982450892412%
+print(f"The Answer is: {miss_open_res_result}%")
+
+# The 5th question
+print("5- What % of opening_variation is missing?")
+missing_open_var_count = chess_df['opening_variation'].isna().sum()
+miss_open_var_result = (missing_open_var_count / len(chess_df)) * 100
+# the answer is % 28.218167314787117%
+print(f"The Answer is: {miss_open_var_result}%")
+
+# The 6th question
+print("6- What is the minimum number of turns in any game? Why is this suspicious?")
+min_turns = chess_df['turns'].min()
+# the answer is 1
+print(f"The Answer is: {min_turns}")
+
+
+# ===============      Stage 2  ========================
+
+
+
+
+
+
+
 
 
 

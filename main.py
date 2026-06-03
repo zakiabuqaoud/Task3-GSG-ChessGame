@@ -142,5 +142,23 @@ highest_status_per = avg_turns_by_victory_status.iloc[0]
 #Answer Q12
 print(f"Answer is : {highest_status} Game with {highest_status_per}%")
 
+#Q13 Which opening family is most popular when Black wins? Same for White?
+print("Q13: Which opening family is most popular when Black wins? Same for White?")
+most_black_win_family_df = chess_df[chess_df["winner"] == "Black"]
+most_family_black = most_black_win_family_df["opening_family"].mode()[0]
+#Answer Q13
+print(f" most black winner Family is {most_family_black}")
 
-
+# Q14) Do rated games have a different White win rate than unrated games?
+# rated white
+print("Q14) Do rated games have a different White win rate than unrated games?")
+rated_game = chess_df[chess_df["rated"] == True]
+rated_white_sum =  len(rated_game[rated_game["winner"] == "White"])
+rated_white_rate = (rated_white_sum / len(rated_game)) * 100
+# unrated white
+unrated_game = chess_df[chess_df["rated"] == False]
+unrated_White_sum =  len(unrated_game[unrated_game["winner"]  == "White"])
+unrated_White_rate = (unrated_White_sum / len(unrated_game)) * 100
+#Answer Q14
+print(f"rated games with white winner is {rated_white_rate}%")
+print(f"unrated games with White winner is {unrated_White_rate}%")

@@ -98,8 +98,19 @@ chess_df = chess_df.drop(columns=['opening_response'])
 print(chess_df.shape)
 print(f"The Answer 2d is: opening_response column is deleted ")
 
+# 2e : Flag short games
+print("2e Flag short games: ")
+chess_df["is_short"] = chess_df["turns"] < 5
+short_games = chess_df[chess_df["is_short"] == True].shape[0]
+# the answer 2e
+print(f"The Answer 2e is: {short_games} short games ")
 
-
+# 2f :
+print("2f Validate:")
+# the answer 2f
+assert chess_df['rating_diff'].notna().all(), "rating_diff contain null"
+assert chess_df.duplicated().sum() == 0, "There are duplicated"
+print("2f validation is Finished.")
 
 
 

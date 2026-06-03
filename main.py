@@ -162,3 +162,22 @@ unrated_White_rate = (unrated_White_sum / len(unrated_game)) * 100
 #Answer Q14
 print(f"rated games with white winner is {rated_white_rate}%")
 print(f"unrated games with White winner is {unrated_White_rate}%")
+
+# Q15: Classify each game as Short/Medium/Long using apply(). What % is each?
+print("Classify each game as Short/Medium/Long using apply(). What % is each?")
+
+def find_turn_category_game(turns):
+    if turns < 20:
+        return 'Short'
+    elif turns < 60:
+        return 'Medium'
+    else:
+        return 'Long'
+
+chess_df['turn_category'] = chess_df['turns'].apply(find_turn_category_game)
+length_counts = chess_df['turn_category'].value_counts()
+turns_cate_percentages = (length_counts / len(chess_df)) * 100
+print("Turn category turns_cate_percentages: Answer Q15:")
+print(turns_cate_percentages)
+
+# ===============      Stage 4  ========================

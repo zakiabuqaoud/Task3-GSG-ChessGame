@@ -132,9 +132,25 @@ def dealing_with_invalid_value_players(df_not_null):
     return df_not_null
 
 # step 7: Validation chess
-def validate_chess():
-    pass
+def validate_chess(df_treated):
+    print("validation Started For chess")
+
+    print("validation Finished For chess")
+    return df_treated
 
 # step 7: Validation players
-def validate_players():
-    pass
+def validate_players(df_treated):
+    print("validation Started For Player")
+    # validate username
+    assert df_treated['username'].notna().all(), "username column contains null values"
+    assert df_treated['username'].isna().sum() == 0, "Found null usernames"
+    duplicate_usernames = df_treated['username'].duplicated().sum()
+    assert duplicate_usernames == 0, f"{duplicate_usernames} duplicate usernames"
+
+    # valid status
+    valid_status = ['active', 'inactive', 'unknown']
+    invalid_status = df_treated[~df_treated['account_status'].isin(valid_status)]
+    assert len(invalid_status) == 0, "rows contain invalid status"
+
+    print("validation Finished For Player")
+    return df_treated

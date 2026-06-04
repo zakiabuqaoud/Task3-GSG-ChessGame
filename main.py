@@ -206,6 +206,14 @@ win_counts_plot.get_figure().savefig('output/wins_by_color.png', bbox_inches='ti
 win_counts_plot.get_figure().clf()
 print("Q18 - Plot: bar chart is Finished")
 
+# Q19- Plot: scatter of white_rating vs ...
+print("Q19: Plot: scatter of white_rating vs turns for rated games. What do you observe? started")
+rated = chess_df[chess_df['rated'] == True]
+ax = rated.plot(kind='scatter', x='white_rating', y='turns', alpha=0.5)
+ax.get_figure().savefig('output/rating_vs_turns.png', bbox_inches='tight')
+print("Q19 - Plot: Plot: scatter of white_rating Finished ... ")
+
+
 
 # ===============      Cleaning-Pipeline  ========================
 

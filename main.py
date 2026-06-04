@@ -2,7 +2,9 @@ import pandas as pd
 import os
 import country
 import cleaning_pipeline
+import logging
 
+logging.basicConfig(level=logging.INFO, format="%(levelname)s - %(message)s")
 # Definition for root variable
 url1 = "https://drive.google.com/file/d/1eR3NZtwIC6ECN3vhtrynqmx8okG0twA7/view?usp=sharing"
 file_id1 = url1.split("/")[5]
@@ -98,6 +100,7 @@ print(chess_df.shape)
 chess_df = chess_df.drop(columns=['opening_response'])
 # the answer 2d
 print(chess_df.shape)
+logging.info("opening_response column is deleted")
 print(f"The Answer 2d is: opening_response column is deleted ")
 
 # 2e : Flag short games

@@ -3,6 +3,10 @@ from pandas import DataFrame
 import re
 import columns_with_target_types
 import numpy as np
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s - %(message)s")
+
 # Step 2: Shaping
 def shaping(df_loaded: DataFrame):
     print("Step2: Shaping Started:-")
@@ -15,6 +19,7 @@ def shaping(df_loaded: DataFrame):
     # remove columns contain on most null
     if "opening_response" in df_loaded.columns:
         df_loaded = df_loaded.drop(columns=['opening_response'])
+    logging.info(f"new Shape: {df_loaded.shape}")
     print("new shape:", df_loaded.shape)
     print("step2: shaping function finished")
     return df_loaded
@@ -50,6 +55,7 @@ def modify_columns_types_chess(df_col_nemed):
             df_col_nemed[col_name] = df_col_nemed[col_name].map({'Y': True, 'N': False, 'y': True, 'n': False})
             df_col_nemed[col_name] = df_col_nemed[col_name].astype(t)
     print(f"New Types is \n {df_col_nemed.dtypes}")
+    logging.info("change col type to target type:-")
     print("step 4: type columns finished For Chess Matches")
     return df_col_nemed
 
@@ -79,6 +85,7 @@ def dealing_with_null(df_typed):
     # drop row which contain null in column [rated]
     if "rated" in df_typed:
         df_typed = df_typed.dropna(subset=["rated"])
+    logging.info("treat nulls: rows deleted that contain null in rated")
     # # fill null [opening_variation]
     if "opening_variation" in df_typed:
         df_typed = df_typed.fillna({
@@ -93,6 +100,8 @@ def dealing_with_null(df_typed):
         df_typed = df_typed.fillna({
             "country_clean": "unknown",
         })
+    logging.info("treat nulls: fill missing value in country and country_clean")
+
 
     print("After Removed Null:-")
     print(df_typed.isnull().sum())
@@ -112,12 +121,15 @@ def dealing_with_invalid_value_chess(df_not_null):
     df_not_null = df_not_null.dropna(subset=['time_base', 'time_sec'])
     df_not_null['time_base'] = df_not_null['time_base'].astype(int)
     df_not_null['time_sec'] = df_not_null['time_sec'].astype(int)
+    logging.info("Deleted Row that contain on null in time_base and time_sec")
 
     # remove rows that not contain black and white id
     df_not_null = df_not_null.dropna(subset=['white_id', 'black_id'])
+    logging.info("Deleted Row that contain on null in white_id and black_id")
 
     # remove duplicated rows
     df_not_null = df_not_null.drop_duplicates()
+    logging.info("Remove Duplicated")
     print("step 6: repair invalid value is finished for chess:-")
     return df_not_null
 
@@ -128,12 +140,16 @@ def dealing_with_invalid_value_players(df_not_null):
     df_not_null = df_not_null.drop_duplicates()
     # remove rows that not contain username
     df_not_null = df_not_null.dropna(subset=['username'])
+    logging.info("remove rows that contain on missing (null) username ")
     print("step 6: repair invalid value is Finished Player for chess:-")
     return df_not_null
 
 # step 7: Validation chess
 def validate_chess(df_treated):
     print("validation Started For chess")
+    assert df_treated['black_id'].notna().all(), "black_id column contains null values"
+    assert df_treated['white_id'].notna().all(), "white_id column contains null values"
+    assert df_treated['rated'].notna().all(), "rating column contains null values"
 
     print("validation Finished For chess")
     return df_treated

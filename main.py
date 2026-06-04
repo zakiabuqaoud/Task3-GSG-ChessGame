@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import country
+import cleaning_pipeline
 
 # Definition for root variable
 url1 = "https://drive.google.com/file/d/1eR3NZtwIC6ECN3vhtrynqmx8okG0twA7/view?usp=sharing"
@@ -196,4 +197,9 @@ print(f"Total unique forms: {players_df['country'].nunique()}")
 players_df['country_clean'] = players_df['country'].map(country.country_mapping).fillna(players_df['country'])
 print(f"the clean country\n {players_df['country_clean'].nunique()} \n {players_df['country_clean'].value_counts()}")
 
+# Q18:
 
+# ===============      Cleaning-Pipeline  ========================
+
+cleaned_chess_df = chess_df.pipe(cleaning_pipeline.shaping).pipe(cleaning_pipeline.col_naming_by_snack_case).pipe(cleaning_pipeline.modify_columns_types_chess).pipe(cleaning_pipeline.dealing_with_null)
+cleaned_player_df = players_df.pipe(cleaning_pipeline.shaping).pipe(cleaning_pipeline.col_naming_by_snack_case).pipe(cleaning_pipeline.modify_columns_types_player).pipe(cleaning_pipeline.dealing_with_null)

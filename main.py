@@ -239,6 +239,7 @@ plot1 = plot1.get_figure()
 plot1.savefig('output/plots/winner_counts.png', bbox_inches='tight')
 plot1.clf()
 print("Plot 1 is Finished")
+
 # Plot 2
 
 plot2 = chess_df.plot(kind='scatter',
@@ -257,6 +258,7 @@ plot2.clf()
 print("Plot 2 is Finished")
 
 # Plot 3
+
 plot3 = chess_df.boxplot(column='turns',
                        by='victory_status',
                        figsize=(10, 6))
@@ -269,3 +271,9 @@ plot3 = plot3.get_figure()
 plot3.savefig('output/plots/turns_by_victory_status.png', dpi=150, bbox_inches='tight')
 plot3.clf()
 print("Plot 3 is Finished")
+
+
+# /////////////// clean dataframe to csv  ///////////////////////////////
+
+cleaned_player_df.to_csv('players_cleaned.csv', index=False)
+cleaned_chess_df.to_csv('chess_cleaned.csv', index=False)

@@ -217,5 +217,42 @@ print("Q19 - Plot: Plot: scatter of white_rating Finished ... ")
 
 # ===============      Cleaning-Pipeline  ========================
 
-cleaned_chess_df = chess_df.pipe(cleaning_pipeline.shaping).pipe(cleaning_pipeline.col_naming_by_snack_case).pipe(cleaning_pipeline.modify_columns_types_chess).pipe(cleaning_pipeline.dealing_with_null).pipe(cleaning_pipeline.dealing_with_invalid_value_chess)
-cleaned_player_df = players_df.pipe(cleaning_pipeline.shaping).pipe(cleaning_pipeline.col_naming_by_snack_case).pipe(cleaning_pipeline.modify_columns_types_player).pipe(cleaning_pipeline.dealing_with_null)
+cleaned_chess_df = chess_df.pipe(cleaning_pipeline.shaping).pipe(cleaning_pipeline.col_naming_by_snack_case).pipe(cleaning_pipeline.modify_columns_types_chess).pipe(cleaning_pipeline.dealing_with_null).pipe(cleaning_pipeline.dealing_with_invalid_value_chess).pipe(cleaning_pipeline.validate_chess)
+cleaned_player_df = players_df.pipe(cleaning_pipeline.shaping).pipe(cleaning_pipeline.col_naming_by_snack_case).pipe(cleaning_pipeline.modify_columns_types_player).pipe(cleaning_pipeline.dealing_with_null).pipe(cleaning_pipeline.dealing_with_invalid_value_players).pipe(cleaning_pipeline.validate_players)
+
+# Produce 3 plots# ===============      3 PLOTS  ========================
+# bar: winner counts · scatter: rating_diff vs turns · box: turns by victory_status. Save all to output/plots/.
+os.makedirs('output/plots', exist_ok=True)
+
+# Plot 1
+winner_counts = chess_df['winner'].value_counts()
+
+plot1 = winner_counts.plot(kind='bar',
+                        color=['white', 'black', 'gray'],
+                        edgecolor='black',
+                        figsize=(8, 6),
+                        title='Number of Wins by Color')
+
+plot1.set_xlabel('Winner')
+plot1.set_ylabel('Number of Games')
+plot1 = plot1.get_figure()
+plot1.savefig('output/plots/winner_counts.png', bbox_inches='tight')
+plot1.clf()
+
+# Plot 2
+
+plot2 = chess_df.plot(kind='scatter',
+                    x='rating_diff',
+                    y='turns',
+                    alpha=0.5,
+                    figsize=(10, 6),
+                    title='Rating Difference vs Number of Turns')
+
+plot2.set_xlabel('Rating Difference (White - Black)')
+plot2.set_ylabel('Number of Turns')
+
+plot2 = plot2.get_figure()
+plot2.savefig('output/plots/rating_diff_vs_turns.png', dpi=150, bbox_inches='tight')
+plot2.clf()
+
+# Plot 3

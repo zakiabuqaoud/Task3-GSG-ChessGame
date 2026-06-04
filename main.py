@@ -238,7 +238,7 @@ plot1.set_ylabel('Number of Games')
 plot1 = plot1.get_figure()
 plot1.savefig('output/plots/winner_counts.png', bbox_inches='tight')
 plot1.clf()
-
+print("Plot 1 is Finished")
 # Plot 2
 
 plot2 = chess_df.plot(kind='scatter',
@@ -254,5 +254,18 @@ plot2.set_ylabel('Number of Turns')
 plot2 = plot2.get_figure()
 plot2.savefig('output/plots/rating_diff_vs_turns.png', dpi=150, bbox_inches='tight')
 plot2.clf()
+print("Plot 2 is Finished")
 
 # Plot 3
+plot3 = chess_df.boxplot(column='turns',
+                       by='victory_status',
+                       figsize=(10, 6))
+
+plot3.set_title('Distribution of Turns by Victory Status')
+plot3.set_xlabel('Victory Status')
+plot3.set_ylabel('Number of Turns')
+
+plot3 = plot3.get_figure()
+plot3.savefig('output/plots/turns_by_victory_status.png', dpi=150, bbox_inches='tight')
+plot3.clf()
+print("Plot 3 is Finished")

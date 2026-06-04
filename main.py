@@ -280,3 +280,11 @@ print("Plot 3 is Finished")
 
 cleaned_player_df.to_csv('players_cleaned.csv', index=False)
 cleaned_chess_df.to_csv('chess_cleaned.csv', index=False)
+
+# //////// Quality Data Report ////////////
+print("Start Quality Data Report")
+test_chess_df = load_data(URL1, "data_raw/chess_games.csv")
+test_players_df = load_data(URL2, "data_raw/player.csv")
+
+print(chess_df.shape)
+print(players_df.shape)

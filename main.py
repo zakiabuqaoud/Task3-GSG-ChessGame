@@ -197,9 +197,17 @@ print(f"Total unique forms: {players_df['country'].nunique()}")
 players_df['country_clean'] = players_df['country'].map(country.country_mapping).fillna(players_df['country'])
 print(f"the clean country\n {players_df['country_clean'].nunique()} \n {players_df['country_clean'].value_counts()}")
 
-# Q18:
+
+# Q18 - Plot: bar chart of win counts by color. Save to output/wins_by_color.png
+print("Q18 - Plot: bar chart is started")
+win_counts = chess_df['winner'].value_counts()
+win_counts_plot = win_counts.plot(kind='bar', color=['white', 'black', 'gray'], edgecolor='black')
+win_counts_plot.get_figure().savefig('output/wins_by_color.png', bbox_inches='tight')
+win_counts_plot.get_figure().clf()
+print("Q18 - Plot: bar chart is Finished")
+
 
 # ===============      Cleaning-Pipeline  ========================
 
-cleaned_chess_df = chess_df.pipe(cleaning_pipeline.shaping).pipe(cleaning_pipeline.col_naming_by_snack_case).pipe(cleaning_pipeline.modify_columns_types_chess).pipe(cleaning_pipeline.dealing_with_null)
+cleaned_chess_df = chess_df.pipe(cleaning_pipeline.shaping).pipe(cleaning_pipeline.col_naming_by_snack_case).pipe(cleaning_pipeline.modify_columns_types_chess).pipe(cleaning_pipeline.dealing_with_null).pipe(cleaning_pipeline.dealing_with_invalid_value_chess)
 cleaned_player_df = players_df.pipe(cleaning_pipeline.shaping).pipe(cleaning_pipeline.col_naming_by_snack_case).pipe(cleaning_pipeline.modify_columns_types_player).pipe(cleaning_pipeline.dealing_with_null)

@@ -2,7 +2,7 @@ import pandas as pd
 from pandas import DataFrame
 import re
 import columns_with_target_types
-
+import numpy as np
 # Step 2: Shaping
 def shaping(df_loaded: DataFrame):
     print("Step2: Shaping Started:-")
@@ -99,4 +99,42 @@ def dealing_with_null(df_typed):
     print("step 5: Dealing and treat null : Finished")
     return df_typed
 
+# step 6: Dealing With invalid value in chess
+def dealing_with_invalid_value_chess(df_not_null):
+    print("step 6: repair invalid value is started for chess:-")
+    # clean invalid value in rating
+    for col in ['white_rating', 'black_rating']:
+        invalid = (df_not_null[col] < 0) | (df_not_null[col] > 3000)
+        df_not_null.loc[invalid, col] = np.nan
+        df_not_null = df_not_null.dropna(subset=[col])
+        df_not_null[col] = df_not_null[col].astype(int)
+    # clean time_increment
+    df_not_null = df_not_null.dropna(subset=['time_base', 'time_sec'])
+    df_not_null['time_base'] = df_not_null['time_base'].astype(int)
+    df_not_null['time_sec'] = df_not_null['time_sec'].astype(int)
 
+    # remove rows that not contain black and white id
+    df_not_null = df_not_null.dropna(subset=['white_id', 'black_id'])
+
+    # remove duplicated rows
+    df_not_null = df_not_null.drop_duplicates()
+    print("step 6: repair invalid value is finished for chess:-")
+    return df_not_null
+
+# step 6: Dealing With invalid value in players
+def dealing_with_invalid_value_players(df_not_null):
+    print("step 6: repair invalid value is started for players:-")
+    # remove duplicated rows
+    df_not_null = df_not_null.drop_duplicates()
+    # remove rows that not contain username
+    df_not_null = df_not_null.dropna(subset=['username'])
+    print("step 6: repair invalid value is Finished Player for chess:-")
+    return df_not_null
+
+# step 7: Validation chess
+def validate_chess():
+    pass
+
+# step 7: Validation players
+def validate_players():
+    pass
